@@ -12,8 +12,11 @@ export function getSupabaseAdmin() {
   }
   if (!client) {
     client = createClient(url, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
+  auth: { persistSession: false, autoRefreshToken: false },
+  global: {
+    fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+  },
+});
   }
   return client;
 }
